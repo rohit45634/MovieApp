@@ -1,0 +1,88 @@
+/* Center page */
+.auth-container {
+  min-height: 100vh;
+   width: 100vw; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form card */
+.auth-form {
+  padding: 25px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.auth-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Button */
+.auth-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background-color: #125aa0;
+}
+
+.auth-form button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Error text */
+.error {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Bottom text */
+.auth-form p {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-form span {
+  color: #1976d2;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.admin-container{
+padding: 20px;
+  display: flex;
+  flex-direction: column;
+align-items: center;     
+  justify-content: center; 
+}
+.admin-content{
+   margin-top: 12px;
+  display: flex;
+  gap: 10px;
+
+}
