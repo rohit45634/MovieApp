@@ -1,6 +1,21 @@
 import Movie from "../models/movieSchema.js";
 import User from "../models/userSchema.js";
 
+export const getCurrentUser = async (req, res) => {
+  try {
+    const userId = req.user.id; // from JWT
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // USER: fetch movies
 export const getAllMovies = async (req, res) => {
   try {
@@ -61,8 +76,10 @@ export const searchMovie = async (req, res) => {
 // ADMIN: add
 export const addMovie = async (req, res) => {
   try {
+    console.log(typeof req.body.rating); // should be "number"
+
     console.log(req.body);
-    const movie = new Movie(req.body);
+    const movie = new Movie({ ...req.body, rating: Number(req.body.rating) });
     await movie.save();
 
     res.status(201).json(movie);
@@ -87,11 +104,13 @@ export const getMovieById = async (req, res) => {
 
 export const editMovie = async (req, res) => {
   try {
-    console.log("EDIT BODY:", req.body); // 👈 ADD THIS
+    console.log("EDIT BODY:", req.body);
 
-    const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const movie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
 
     res.json(movie);
   } catch (error) {

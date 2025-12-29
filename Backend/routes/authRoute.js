@@ -5,6 +5,6 @@ const authRoute = express.Router(); //create router instance
 
 authRoute.post("/register", signUp);
 authRoute.post("/login", Login);
-authRoute.get("/Logout", LogOut);
+authRoute.get("/logout", LogOut);
 
 export default authRoute;

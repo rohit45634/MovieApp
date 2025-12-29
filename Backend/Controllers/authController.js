@@ -51,8 +51,8 @@ export const Login = async (req, res) => {
     const token = genToken(user._id, user.role);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // true if using HTTPS
-      sameSite: "None",
+      secure: false, // true if using HTTPS
+      sameSite: "Lax",
     });
 
     return res.status(200).json({
@@ -73,8 +73,8 @@ export const Login = async (req, res) => {
 export const LogOut = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "None",
-    secure: true,
+    sameSite: "Lax",
+    secure: false,
   });
   return res.status(200).json({ message: "Logged out successfully" });
 };

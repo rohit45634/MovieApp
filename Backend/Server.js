@@ -11,8 +11,8 @@ console.log("TMDB KEY:", process.env.TMDB_API_KEY); // 👈 now it will print
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
@@ -22,10 +22,6 @@ app.use(cookieParser());
 
 app.use("/auth", authRoute);
 app.use("/movies", router);
-
-app.get("/", (req, res) => {
-  res.send("Movie API is running (ES6)");
-});
 
 const PORT = process.env.PORT || 5000;
 //mongoose connected

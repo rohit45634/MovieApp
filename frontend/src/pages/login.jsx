@@ -1,9 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../pages/context.jsx"; 
+import { toast } from "react-toastify";
+
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -11,7 +17,6 @@ const Login = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,11 +44,10 @@ const Login = () => {
     // 🔴 stop if validation fails
     const validationError = validate();
     if (validationError) {
-      setError(validationError);
+      toast.success(validationError);
       return;
     }
 
-    setError("");
     setLoading(true);
 
     try {
@@ -53,7 +57,7 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      localStorage.setItem("role", res.data.role);
+login(res.data.role); 
 
       if (res.data.role === "admin") {
         navigate("/dashborad");
@@ -61,7 +65,7 @@ const Login = () => {
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      toast.error(err.response?.data?.message|| "Login failed");
     } finally {
       setLoading(false);
     }
@@ -72,7 +76,6 @@ const Login = () => {
       <form className="auth-form" onSubmit={handleLogin}>
         <h2>Login</h2>
 
-        {error && <p className="error">{error}</p>}
 
         <input
           type="email"

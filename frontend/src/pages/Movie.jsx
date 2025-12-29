@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Box, Pagination } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -24,6 +25,8 @@ const AllMovies = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [sortBy, setSortBy] = useState("");
 const [order, setOrder] = useState("asc");
+const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const [order, setOrder] = useState("asc");
         ? `http://localhost:8080/movies/sorted?sortBy=${sortBy}&order=${order}`
       : `http://localhost:8080/movies?page=${page}`;
 
-          const res = await axios.get(url);
+          const res = await axios.get(url, { withCredentials: true } );
 
         if (searchKeyword) {
     setMovies(res.data);       
@@ -48,15 +51,44 @@ const [order, setOrder] = useState("asc");
     fetchMovies();
   }, [page,searchKeyword,sortBy,order]);
 
-  // 🔍 SEARCH BUTTON CLICK
+  //  SEARCH BUTTON CLICK
   const handleSearch = () => {
     setPage(1);      // reset pagination
       setSearchKeyword(keyword);  // 🔥 trigger search
 
   };
+  const handleLogout = async () => {
+  try {
+    await axios.get(
+      "http://localhost:8080/auth/logout",
+      
+      { withCredentials: true }
+    );
+
+    localStorage.removeItem("role");
+    navigate("/login");
+  } catch (err) {
+    console.error("Logout failed", err);
+  }
+};
 
   return (
    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Box
+  sx={{
+    position: "absolute",
+    top: 20,
+    right: 30,
+  }}
+>
+  <Button
+    variant="outlined"
+    color="error"
+    onClick={handleLogout}
+  >
+    Logout
+  </Button>
+</Box>
   <Typography variant="h4" textAlign="center" gutterBottom>
     All Movies
   </Typography> 
@@ -71,7 +103,7 @@ const [order, setOrder] = useState("asc");
         />
         <button onClick={handleSearch }>Search</button>
       </div>
-{/* 🔽 SORT DROPDOWN */}
+{/*  SORT DROPDOWN */}
 <div style={{ marginTop: "15px", display: "flex", gap: "10px",  margin :"10px"}}>
   <select 
   style={{
@@ -105,7 +137,7 @@ const [order, setOrder] = useState("asc");
   <Grid container spacing={3}>
     {movies.map((movie) => (
       <Grid
-        item
+        
         key={movie._id}
         xs={12}   // mobile → 1 card
         sm={6}    // tablet → 2 cards
@@ -141,12 +173,27 @@ const [order, setOrder] = useState("asc");
               sx={{
                 fontSize: "1rem",
                 fontWeight: 600,
-                height: 48,          // 🔥 fixed title height
+                height: 48,          // fixed title height
                 overflow: "hidden",
               }}
             >
               {movie.title}
             </Typography>
+<Typography
+  variant="body2"
+  color="text.secondary"
+  sx={{
+    height: 40,              // fixed height
+    overflow: "hidden",      // hide extra text
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: 2,      // show only 2 lines
+    WebkitBoxOrient: "vertical",
+    mb: 1,
+  }}
+>
+  {movie.description}
+</Typography>
 
             <Typography variant="body2" color="text.secondary">
               Release: {movie.releaseDate?.slice(0, 10)}

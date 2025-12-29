@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddMovie = () => {
           const navigate =useNavigate()
@@ -24,16 +25,15 @@ const AddMovie = () => {
     e.preventDefault();  //prevent page reload 
 
 try {
-          await axios.post("http://localhost:8080/movies", formData,{withCredentials:true});
+          await axios.post("http://localhost:8080/movies", {...formData,rating: Number(formData.rating)},{withCredentials:true});
 
-    alert("Movie added successfully");
+    toast.success("Movie added successfully");
 
     setFormData({
       title: "",
-      description: "",
+      description:"",
       rating: "",
       releaseDate: "",
-      posterPath: ""
     });
 
           
@@ -72,7 +72,7 @@ console.log(error)
           onChange={handleChange}
           multiline
           rows={3}
-          required
+          
         />
 
         <TextField
@@ -88,20 +88,11 @@ console.log(error)
           label="Release Date"
           name="releaseDate"
           type="date"
-          InputLabelProps={{ shrink: true }}
           value={formData.releaseDate}
           onChange={handleChange}
           required
         />
 
-       
-
-        <TextField
-          label="Poster URL"
-          name="posterPath"
-          value={formData.posterPath}
-          onChange={handleChange}
-        />
 
         <Button type="submit" variant="contained">
           Add Movie

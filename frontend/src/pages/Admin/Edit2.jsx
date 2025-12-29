@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import { toast } from "react-toastify";
 
 const MovieForm = () => {
-  const { id } = useParams();          //  key
+  const { id } = useParams();
   const isEdit = Boolean(id);
   const navigate = useNavigate();
 
   const [movie, setMovie] = useState({
     title: "",
+    description: "",
     rating: "",
     releaseDate: "",
-   
+    posterPath: "",
   });
 
-  // fetch movie only in edit mode
+  // ✅ FETCH MOVIE FOR EDIT
   useEffect(() => {
     if (isEdit) {
       axios
-        .get(`http://localhost:8080/movies/${id}`)
-        .then((res) => setMovie(res.data));
+        .get(`http://localhost:8080/movies/${id}`, { withCredentials: true })
+        .then((res) => {
+          setMovie({
+            ...res.data,
+            releaseDate: res.data.releaseDate?.slice(0, 10),
+          });
+        })
+        .catch(() => toast.error("Failed to load movie"));
     }
   }, [id, isEdit]);
 
@@ -37,62 +39,76 @@ const MovieForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isEdit) {
-      await axios.patch(
+    try {
+      await axios.put(
         `http://localhost:8080/movies/${id}`,
-        
         {
-      title: movie.title,
-      releaseDate: movie.releaseDate,
-      
-      rating: Number(movie.rating),
-
-    },  { withCredentials: true }
-
+          ...movie,
+          rating: Number(movie.rating),
+        },
+        { withCredentials: true }
       );
-    } else {
-      await axios.post(
-        "http://localhost:8080/movies",
-        movie,  { withCredentials: true }
 
-      );
+      toast.success("Movie updated successfully");
+      navigate("/admin/edit");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Update failed");
     }
-
-    navigate("/admin/edit");
   };
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Typography variant="h4" textAlign="center" gutterBottom>
-        {isEdit ? "Edit Movie" : "Add Movie"}
+        Edit Movie
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} sx={{ display: "grid", gap: 2 }}>
-       <TextField
-  label="Title"
-  name="title"
-  value={movie.title}
-  onChange={handleChange}
-/>
+        <TextField
+          label="Title"
+          name="title"
+          value={movie.title}
+          onChange={handleChange}
+          required
+        />
 
-<TextField
-  type="date"
-  label="Release Date"
-  name="releaseDate"
-  value={movie.releaseDate?.slice(0, 10)}
-  onChange={handleChange}
-  InputLabelProps={{ shrink: true }}
-/>
+        <TextField
+          label="Description"
+          name="description"
+          value={movie.description}
+          onChange={handleChange}
+          multiline
+          rows={3}
+          required
+        />
 
-<TextField
-  label="Rating"
-  name="rating"
-  value={movie.rating}
-  onChange={handleChange}
-/>
+        <TextField
+          type="date"
+          label="Release Date"
+          name="releaseDate"
+          value={movie.releaseDate}
+          onChange={handleChange}
+          required
+        />
+
+        <TextField
+          label="Rating"
+          name="rating"
+          type="number"
+          value={movie.rating}
+          onChange={handleChange}
+          required
+        />
+
+        <TextField
+          label="Poster URL"
+          name="posterPath"
+          value={movie.posterPath}
+          onChange={handleChange}
+        />
 
         <Button type="submit" variant="contained">
-          {isEdit ? "UPDATE MOVIE" : "ADD MOVIE"}
+          UPDATE MOVIE
         </Button>
       </Box>
     </Container>

@@ -2,14 +2,19 @@ import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema(
   {
-    tmdbId: { type: Number, unique: true },
+    tmdbId: {
+      type: Number,
+      unique: true,
+      sparse: true, //
+    },
 
     title: {
       type: String,
+      required: true,
     },
     description: {
       type: String,
-      required: true,
+      default: "No description available",
     },
     rating: {
       type: Number,
@@ -19,7 +24,6 @@ const movieSchema = new mongoose.Schema(
     releaseDate: {
       type: Date,
     },
-    posterPath: { type: String },
   },
 
   { timestamps: true }

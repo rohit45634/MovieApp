@@ -18,7 +18,7 @@ const AdminMovies = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       const res = await axios.get(
-        `http://localhost:8080/movies?page=${page}`
+        `http://localhost:8080/movies?page=${page}`, { withCredentials: true } 
       );
 
       setMovies(res.data.movies);
@@ -44,6 +44,13 @@ const AdminMovies = () => {
   return (
     <>
       <Container sx={{ py: 4 }}>
+        <Button
+          variant="outlined"
+          sx={{ mb: 2 }}
+          onClick={() => navigate("/dashborad")}
+        >
+          ⬅ Back to Dashboard
+        </Button>
         <Typography variant="h4" textAlign="center" gutterBottom>
           Admin – Manage Movies
         </Typography>
@@ -71,7 +78,7 @@ const AdminMovies = () => {
                   navigate(`/admin/movie/${movie._id}`)
                 }
               >
-                ✏️ Edit
+                 Edit
               </Button>
 
               <Button

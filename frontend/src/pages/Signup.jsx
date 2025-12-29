@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ const Signup = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -20,19 +20,25 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError("");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!emailRegex.test(formData.email)) {
+  toast.error("Please enter a valid email address");
+  return;
+}
+
     setLoading(true);
 
     try {
 
       await axios.post(
         "http://localhost:8080/auth/register",
-        formData
+        formData,
       );
-      alert("Signup successful");
+      toast.success("Signup successful");
       navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      toast.error(err.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
@@ -67,7 +73,6 @@ const Signup = () => {
           onChange={handleChange}
           required
         />
-        {error && <p className="error">{error}</p>}
 
         <button type="submit" disabled={loading}>
           {loading ? "Signing up..." : "Signup"}
