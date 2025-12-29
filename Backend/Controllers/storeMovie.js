@@ -31,7 +31,6 @@ const storeMovie = async (req, res) => {
 
     res.json({ message: "250 movies saved successfully" });
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ message: "TMDB fetch failed" });
   }
 };

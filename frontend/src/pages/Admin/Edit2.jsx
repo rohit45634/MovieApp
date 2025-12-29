@@ -52,7 +52,6 @@ const MovieForm = () => {
       toast.success("Movie updated successfully");
       navigate("/admin/edit");
     } catch (error) {
-      console.log(error);
       toast.error(error.response?.data?.message || "Update failed");
     }
   };

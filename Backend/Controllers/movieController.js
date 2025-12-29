@@ -76,9 +76,6 @@ export const searchMovie = async (req, res) => {
 // ADMIN: add
 export const addMovie = async (req, res) => {
   try {
-    console.log(typeof req.body.rating); // should be "number"
-
-    console.log(req.body);
     const movie = new Movie({ ...req.body, rating: Number(req.body.rating) });
     await movie.save();
 
@@ -104,8 +101,6 @@ export const getMovieById = async (req, res) => {
 
 export const editMovie = async (req, res) => {
   try {
-    console.log("EDIT BODY:", req.body);
-
     const movie = await Movie.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
