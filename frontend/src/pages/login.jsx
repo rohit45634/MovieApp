@@ -62,7 +62,7 @@ login(res.data.role);
       if (res.data.role === "admin") {
         navigate("/dashborad");
       } else {
-        navigate("/");
+        navigate("/movies");
       }
     } catch (err) {
       toast.error(err.response?.data?.message|| "Login failed");
