@@ -6,6 +6,31 @@ const Home = () => {
 
   return (
     <Container maxWidth="md">
+      {/* 🔹 TOP BAR */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 2,
+          mt: 2,
+        }}
+      >
+        <Button
+          variant="outlined"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </Button>
+
+        <Button
+          variant="contained"
+          onClick={() => navigate("/signup")}
+        >
+          Signup
+        </Button>
+      </Box>
+
+      {/* 🔹 MAIN CONTENT */}
       <Box
         sx={{
           height: "80vh",
