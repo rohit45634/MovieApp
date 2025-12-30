@@ -21,8 +21,7 @@ const MovieForm = () => {
   useEffect(() => {
     if (isEdit) {
       axios
-        .get(`movies-backend.up.railway.app
-/movies/${id}`, { withCredentials: true })
+        .get(`https://movies-backend.up.railway.app/movies/${id}`, { withCredentials: true })
         .then((res) => {
           setMovie({
             ...res.data,
@@ -42,8 +41,7 @@ const MovieForm = () => {
 
     try {
       await axios.put(
-        `movies-backend.up.railway.app
-/movies/${id}`,
+        `https://movies-backend.up.railway.app/movies/${id}`,
         {
           ...movie,
           rating: Number(movie.rating),
