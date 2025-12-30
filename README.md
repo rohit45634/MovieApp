@@ -71,6 +71,7 @@ To run this project, you will need to add the following environment variables to
 - MONGO_URL
 - JWT_SECRET
 - PORT
+- TMDB_API_KEY
 
 
 
