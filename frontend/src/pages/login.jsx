@@ -52,7 +52,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/auth/login",
+        "movies-backend.up.railway.app/auth/login",
         formData,
         { withCredentials: true }
       );

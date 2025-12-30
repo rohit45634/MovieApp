@@ -25,7 +25,7 @@ const AddMovie = () => {
     e.preventDefault();  //prevent page reload 
 
 try {
-          await axios.post("http://localhost:8080/movies", {...formData,rating: Number(formData.rating)},{withCredentials:true});
+          await axios.post("movies-backend.up.railway.app/movies", {...formData,rating: Number(formData.rating)},{withCredentials:true});
 
     toast.success("Movie added successfully");
 

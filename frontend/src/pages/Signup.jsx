@@ -32,7 +32,7 @@ if (!emailRegex.test(formData.email)) {
     try {
 
       await axios.post(
-        "http://localhost:8080/auth/register",
+        "movies-backend.up.railway.app/auth/register",
         formData,
       );
       toast.success("Signup successful");

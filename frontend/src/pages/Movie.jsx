@@ -32,10 +32,13 @@ const navigate = useNavigate();
   useEffect(() => {
      const fetchMovies = async () => {
  const url = searchKeyword
-      ? `http://localhost:8080/movies/search?keyword=${searchKeyword}`
+      ? `movies-backend.up.railway.app
+/movies/search?keyword=${searchKeyword}`
       :sortBy
-        ? `http://localhost:8080/movies/sorted?sortBy=${sortBy}&order=${order}`
-      : `http://localhost:8080/movies?page=${page}`;
+        ? `movies-backend.up.railway.app
+/movies/sorted?sortBy=${sortBy}&order=${order}`
+      : `movies-backend.up.railway.app
+/movies?page=${page}`;
 
           const res = await axios.get(url, { withCredentials: true } );
 
@@ -60,7 +63,7 @@ const navigate = useNavigate();
   const handleLogout = async () => {
   try {
     await axios.get(
-      "http://localhost:8080/auth/logout",
+      "movies-backend.up.railway.app/auth/logout",
       
       { withCredentials: true }
     );

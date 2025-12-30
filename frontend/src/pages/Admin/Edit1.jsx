@@ -18,7 +18,8 @@ const AdminMovies = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       const res = await axios.get(
-        `http://localhost:8080/movies?page=${page}`, { withCredentials: true } 
+        `movies-backend.up.railway.app
+/movies?page=${page}`, { withCredentials: true } 
       );
 
       setMovies(res.data.movies);
@@ -31,11 +32,13 @@ const AdminMovies = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this movie?")) return;
 
-    await axios.delete(`http://localhost:8080/movies/${id}`,  { withCredentials: true }
+    await axios.delete(`movies-backend.up.railway.app
+/movies/${id}`,  { withCredentials: true }
 );
 
     const res = await axios.get(
-      `http://localhost:8080/movies?page=${page}`,  { withCredentials: true }
+      `movies-backend.up.railway.app
+/movies?page=${page}`,  { withCredentials: true }
 
     );
     setMovies(res.data.movies);
