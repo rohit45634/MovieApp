@@ -30,7 +30,7 @@ function App() {
   <Routes>
      <Route path ="/signup" element={<Signup/>} />
                 <Route path ="/login" element={<Login/>} />
-            <Route path ="/" element={isLoggedIn ?<Home/> :<Navigate to={"/login"  }/>} />
+            <Route path ="/" element={<Home/> }/>
 
         <Route path ="/movies" element={isLoggedIn ?<AllMovies/> :<Navigate to={"/login"}/>} />
                 <Route path ="/add" element={<AddMovie/>} />
