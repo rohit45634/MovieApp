@@ -89,3 +89,11 @@ password: admin123
 User:
 email: user@test.com  
 password: user123
+
+## Screenshorts
+<img width="1839" height="849" alt="image" src="https://github.com/user-attachments/assets/5cc61197-437a-4dc8-b184-720a7272dd6e" />
+<img width="1905" height="849" alt="image" src="https://github.com/user-attachments/assets/e7fe57ed-d986-4045-8573-0f3ae9ec68b9" />
+<img width="1780" height="902" alt="image" src="https://github.com/user-attachments/assets/ab823287-ccb5-4728-95bb-75868b83be8d" />
+
+
+
