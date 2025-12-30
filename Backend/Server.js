@@ -11,7 +11,7 @@ console.log("TMDB KEY:", process.env.TMDB_API_KEY); // 👈 now it will print
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://movieapp-9tql.onrender.com",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
